@@ -45,5 +45,3 @@ Não há Maven/Gradle, testes automatizados ou validação de dados. Os métodos
 3. Qual a vantagem da herança? Identifique os dados inicializados uma única vez pelo construtor da classe base.
 4. Como proteger o VIN? Observe o campo privado e os acessores, distinguindo acesso controlado de validação.
 5. Quais limites do encapsulamento atual? Compare o VIN privado com os quatro atributos públicos.
-
-A documentação mantém o caráter didático e a autoria do trabalho; nenhum fonte foi alterado.
