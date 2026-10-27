@@ -1,57 +1,49 @@
-Integrantes: Eduardo Braz de Oliveira // Willian Makoto Maeda
+# Veículos: exercício de POO em Java
 
-Exercício: Introdução à POO - Herança, Abstração e Encapsulamento
+Exercício acadêmico de abstração, herança e encapsulamento.
 
-Parte 1: Abstração
-Imagine que você precisa criar um sistema para gerenciar veículos em uma empresa de
-aluguel de carros. Cada veículo tem certas características, como marca, modelo, ano de
-fabricação, e cor.
-Perguntas:
-1. Quais características (atributos) e comportamentos (métodos) você consideraria
-importantes para uma classe abstrata chamada Veículo? Liste pelo menos 4
-atributos e 2 métodos que fariam parte dessa classe.
+**Integrantes:** Eduardo Braz de Oliveira e Willian Makoto Maeda.
 
-R: Atributos: Marca; modelo; ano de fabricação; cor e VIN.
-Métodos: Acelerar e frear.
+O cenário do enunciado menciona uma empresa de aluguel, mas o código é uma demonstração de classes e mensagens no console. Não implementa locação, cadastro persistente ou gestão de frota.
 
-2. Por que você acha que essa classe deveria ser abstrata? Explique o conceito de
-abstração com base nesse exemplo.
+## Estrutura
 
-R: Essa classe deve ser abstrata, devido que consiste em características e comportamentos que todo veículo possa ter. A abstração se concentra em ocultar os detalhes complexos de uma implementação, expondo apenas as funcionalidades essenciais que são necessárias para o uso de um objeto, não precisamente fazendo uso de todas as funcionalidades, ou seja, todos os métodos e atributos.
+| Arquivo | Papel |
+| --- | --- |
+| `Veiculo.java` | Classe abstrata com marca, modelo, ano, cor e VIN |
+| `Carro.java`, `Moto.java`, `Caminhao.java` | Subclasses que implementam `acelerar()` e `frear()` |
+| `Main.java` | Cria um objeto de cada tipo, atribui VIN e chama os métodos |
 
-Parte 2: Herança
-Com base na classe abstrata Veículo, você precisa criar classes específicas para tipos de
-veículos: Carro, Moto, e Caminhão.
-Perguntas:
-1. Se a classe Veiculo tem um método abstrato chamado mover(), como você
-implementaria esse método nas classes Carro, Moto, e Caminhao? Descreva
-como cada tipo de veículo se move de maneira diferente.
+As quatro classes de veículos declaram `package Automovel;`, embora os arquivos estejam na raiz. `Main` está no pacote padrão e importa as subclasses.
 
-R:Fazendo uso do método abstrato chamado acelerar(), podemos implementa-lo nas classes Carro, Moto e Caminhão, de acordo com o nome de cada veículo, que no caso é uma característica individual de cada um, herdando então as características e comportamentos abstratos. O acelerar() será diferente para cada um, de acordo com a premissa que o nome utilizado em cada, terá nome diferente.
+## Conceitos para revisão
 
-2. Qual é a vantagem de usar herança nesse caso, em vez de criar as classes Carro,
-Moto, e Caminhao do zero? Explique o conceito de herança com base nesse
-exemplo.
+- **Abstração:** `Veiculo` reúne características comuns e declara os comportamentos abstratos `acelerar` e `frear`. Não pode ser instanciada diretamente.
+- **Herança:** as subclasses usam `extends Veiculo` e `super(...)` para reaproveitar o construtor da classe base.
+- **Sobrescrita:** cada implementação imprime uma mensagem específica para seu tipo.
+- **Encapsulamento:** apenas `VIN` é privado e acessado por `getVIN()` e `setVIN()`. Os demais atributos são públicos. O setter não valida o VIN nem o torna imutável.
 
-R:As vantagens de fazer uso da herança nesse caso, se concentra em herdar os atributos e métodos abstratos, quais esses, todos os tipos de veículos terão e ao realizar isso, evito ter que inserir as mesmas informações para classes diferentes. Herança permite que uma nova classe, chamada subclasse ou classe derivada, herde propriedades e comportamentos de uma classe existente, chamada superclasse ou classe base.
+O enunciado cita um método hipotético `mover()`; o código utiliza `acelerar()` e `frear()`.
 
-Parte 3: Encapsulamento
-Para proteger as informações dos veículos, você precisa garantir que os atributos, como o
-número de identificação do veículo (VIN), não possam ser alterados diretamente.
-Perguntas:
-1. Como você implementaria o encapsulamento para proteger o atributo vin na
-classe Veículo? Descreva como você usaria métodos getter e setter para acessar e
-modificar esse atributo.
+## Compilar e executar
 
-R:Implementaria através do modificador chamado “private”. Uma vez que o número de identificação esteja implementado com o modificador private, para conseguir acessa-lo usaria o método chamado getter, para puxar a informação anexada junto ao número de identificação e assim, conseguir visualiza-lo e usaria o método setter, para realizar uma atribuição ao número de identificação, podendo alterá-lo.
+Com um JDK instalado, execute na raiz:
 
-2. Por que é importante proteger os atributos de uma classe? Explique o conceito de
-encapsulamento com base nesse exemplo.
+```sh
+javac -encoding UTF-8 -d build Veiculo.java Carro.java Moto.java Caminhao.java Main.java
+java -cp build Main
+```
 
-R:É importante protegê-los de modo que não possam ser acessados de fora da classe, restringindo assim o seu uso, podemos referi-lo como uma identificação única e pessoal. Encapsulamento é um processo de envolver dados e código em uma única unidade. Essa proteção pode ser conquistada utilizando o modificador de acesso private, que indica que a variável ou dado não pode ser acessado de fora da classe.
+A opção `-d build` organiza as classes compiladas conforme seus pacotes. O programa mostra os VINs de exemplo e mensagens de aceleração e frenagem de carro, moto e caminhão.
 
-Instruções para Resolução
-• Escreva suas respostas no papel, explicando seus pensamentos de forma clara e
-objetiva.
-• Não é necessário escrever código Java completo, apenas descreva como você
-abordaria cada questão usando os conceitos de POO.
+Não há Maven/Gradle, testes automatizados ou validação de dados. Os métodos de movimento apenas imprimem texto; não simulam velocidade.
+
+## Perguntas do exercício
+
+1. Quais atributos e comportamentos são comuns aos veículos? Compare os campos de `Veiculo` com seus métodos abstratos.
+2. Por que a classe base é abstrata? Observe como cada subclasse completa os comportamentos.
+3. Qual a vantagem da herança? Identifique os dados inicializados uma única vez pelo construtor da classe base.
+4. Como proteger o VIN? Observe o campo privado e os acessores, distinguindo acesso controlado de validação.
+5. Quais limites do encapsulamento atual? Compare o VIN privado com os quatro atributos públicos.
+
+A documentação mantém o caráter didático e a autoria do trabalho; nenhum fonte foi alterado.
